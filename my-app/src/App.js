@@ -25,11 +25,12 @@ class App extends Component {
       },
       searchAlbums: {
         name: '',
-        artists: ''
+        artists: '',
+        image: ''
       }
     };
     this.handleChange = this.handleChange.bind(this);
-    
+
     if(params.access_token){
       spotifyWebApi.setAccessToken(accessToken)
     }
@@ -74,7 +75,15 @@ class App extends Component {
   }
   searchAlbums(){
     spotifyWebApi.searchAlbums(this.state.value)
-
+    .then((response) => {
+      this.setState({
+        searchAlbums: {
+          artists: response.albums.items[0].artists[0].name,
+          name: response.albums.items[0].name,
+          image: response.albums.items[0].images[0].url
+        }
+      })
+    })
   }
 
   render() {
@@ -89,7 +98,16 @@ class App extends Component {
               <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
               <button class="btn btn-small" id="clickMe" type="button" onClick={() => this.searchAlbums()}>Search</button>
             </form>
-            <a href="http://localhost:8888/" class="btn btn-dark btn-lg active" role="button" aria-pressed="true">Login using Spotify</a>
+            <div class="text-left">
+              <strong>Artists: </strong>
+                {this.state.searchAlbums.artists} <br></br>
+              <strong>Album: </strong>
+                {this.state.searchAlbums.name} <br></br>
+                <img class="img rounded" src={ this.state.searchAlbums.image } style={{width: 200}}/>
+            </div>
+            <div class="top-right">
+              <a href="http://localhost:8888/" class="btn btn-dark active" role="button" aria-pressed="true">Login using Spotify</a>
+            </div>
               <div>
                 Now Playing: { this.state.nowPlaying.name }
               </div>

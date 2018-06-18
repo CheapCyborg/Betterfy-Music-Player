@@ -26,7 +26,8 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-a {
-  margin: 50px;
-  align-content: center;
+.top-right {
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
