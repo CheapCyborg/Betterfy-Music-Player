@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './bootstrap.min.css';
+import fontawesome from '@fortawesome/fontawesome';
+import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
+import faPauseCircle from '@fortawesome/fontawesome-free-solid/faPauseCircle';
+import faStepForward from '@fortawesome/fontawesome-free-solid/faStepForward';
+import faStepBackward from '@fortawesome/fontawesome-free-solid/faStepBackward';
+fontawesome.library.add(faStepBackward);
+fontawesome.library.add(faPlay);
+fontawesome.library.add(faPauseCircle);
+fontawesome.library.add(faStepForward);
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 
@@ -14,14 +23,14 @@ class App extends Component {
       loggedIn: accessToken ? true : false,
       value: '',
       nowPlaying: {
-        name: ' Not Checked',
+        name: ' Not Checked  ',
         image: '',
-        artists: ' Not Checked'
+        artists: ' Not Checked  '
       },
       recentlyPlayed: {
         name: '',
         image: '',
-        artists: ' Not Checked'
+        artists: ' Not Checked  '
       },
       searchAlbums: {
         name: '',
@@ -85,6 +94,31 @@ class App extends Component {
       })
     })
   }
+  playCurrentSong(){
+    var Id = {
+      deviceID: " "
+    }
+    spotifyWebApi.play(Id)
+  }
+  pauseCurrentSong(){
+    var Id = {
+      deviceID: " "
+    }
+    spotifyWebApi.pause(Id)
+  }
+
+  skipSong(){
+    var Id = {
+      deviceID: " "
+    }
+    spotifyWebApi.skipToNext(Id)
+  }
+  skipBackSong(){
+    var Id = {
+      deviceID: " "
+    }
+    spotifyWebApi.skipToPrevious(Id)
+  }
 
   render() {
     return (
@@ -103,11 +137,17 @@ class App extends Component {
                 {this.state.searchAlbums.artists} <br></br>
               <strong>Album: </strong>
                 {this.state.searchAlbums.name} <br></br>
+                <div>
                 <img class="img rounded" src={ this.state.searchAlbums.image } style={{width: 200}}/>
+                </div>
             </div>
             <div class="top-right">
               <a href="http://localhost:8888/" class="btn btn-dark active" role="button" aria-pressed="true">Login using Spotify</a>
             </div>
+            <button class="btn btn-small" onClick={() => this.skipBackSong()}><i class="fas fa-step-backward"></i></button>
+            <button class="btn btn-small" onClick={() => this.playCurrentSong()}><i class="fas fa-play"></i></button>
+            <button class="btn btn-small" onClick={() => this.pauseCurrentSong()}><i class="fas fa-pause-circle"></i></button>
+            <button class="btn btn-small" onClick={() => this.skipSong()}><i class="fas fa-step-forward"></i></button>
               <div>
                 Now Playing: { this.state.nowPlaying.name }
               </div>
@@ -137,5 +177,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
