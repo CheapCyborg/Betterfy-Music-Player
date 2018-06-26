@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
+import WebPlaybackReact from './WebPlaybackReact.js';
+import LoginCallback from './LoginCallback.js';
+import IntroScreen from './Intro.js';
+import NowPlayingScreen from './NowPlaying.js';
 import './App.css';
 import './bootstrap.min.css';
 import fontawesome from '@fortawesome/fontawesome';
@@ -13,8 +17,9 @@ fontawesome.library.add(faPauseCircle);
 fontawesome.library.add(faStepForward);
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
+window.onSpotifyWebPlaybackSDKReady = () => {};
+export default class App extends Component {
 
-class App extends Component {
   constructor() {
     super();
     const params = this.getHashParams();
@@ -36,7 +41,14 @@ class App extends Component {
         name: '',
         artists: '',
         image: ''
-      }
+      },
+      userDeviceId: null,
+      userAccessToken: null,
+
+      // Player state
+      playerLoaded: false,
+      playerSelected: false,
+      playerState: null
     };
     this.handleChange = this.handleChange.bind(this);
 
@@ -44,6 +56,32 @@ class App extends Component {
       spotifyWebApi.setAccessToken(accessToken)
     }
   }
+
+  componentWillMount() {
+    LoginCallback({
+      onSuccessfulAuthorization: this.onSuccessfulAuthorization.bind(this),
+      onAccessTokenExpiration: this.onAccessTokenExpiration.bind(this)
+    });
+  }
+
+  onSuccessfulAuthorization(accessToken) {
+    this.setState({
+      userAccessToken: accessToken
+    });
+  }
+
+  onAccessTokenExpiration() {
+    this.setState({
+      userDeviceId: null,
+      userAccessToken: null,
+      playerLoaded: false,
+      playerSelected: false,
+      playerState: null
+    });
+
+    console.error("The user access token has expired.");
+  }
+
   handleChange(event) {
       this.setState({
         value: event.target.value
@@ -58,69 +96,29 @@ class App extends Component {
     }
     return hashParams;
   }
-  getNowPlaying() {
-    spotifyWebApi.getMyCurrentPlaybackState()
-    .then((response) => {
-      this.setState({
-        nowPlaying: {
-          name: response.item.name,
-          image: response.item.album.images[0].url,
-          artists: response.item.artists[0].name
-        }
-      })
-    })
-  }
-  getRecentlyPlayed(){
-    spotifyWebApi.getMyRecentlyPlayedTracks()
-    .then((response) => {
-      this.setState({
-        recentlyPlayed: {
-          name: response.items[0].track.album.name,
-          image: response.items[0].track.album.images[0].url,
-          artists: response.items[0].track.artists[0].name
-        }
-      })
-    })
-  }
-  searchAlbums(){
-    spotifyWebApi.searchAlbums(this.state.value)
-    .then((response) => {
-      this.setState({
-        searchAlbums: {
-          artists: response.albums.items[0].artists[0].name,
-          name: response.albums.items[0].name,
-          image: response.albums.items[0].images[0].url
-        }
-      })
-    })
-  }
-  playCurrentSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.play(Id)
-  }
-  pauseCurrentSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.pause(Id)
-  }
-
-  skipSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.skipToNext(Id)
-  }
-  skipBackSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.skipToPrevious(Id)
-  }
 
   render() {
+    let {
+      userDeviceId,
+      userAccessToken,
+      playerLoaded,
+      playerSelected,
+      playerState
+    } = this.state;
+
+    let webPlaybackSdkProps = {
+      playerName: "Spotify React Player",
+      playerInitialVolume: 2.0,
+      playerRefreshRateMs: 100,
+      playerAutoConnect: true,
+      onPlayerRequestAccessToken: (() => userAccessToken),
+      onPlayerLoading: (() => this.setState({ playerLoaded: true })),
+      onPlayerWaitingForDevice: (data => this.setState({ playerSelected: false, userDeviceId: data.device_id })),
+      onPlayerDeviceSelected: (() => this.setState({ playerSelected: true })),
+      onPlayerStateChange: (playerState => this.setState({ playerState: playerState })),
+      onPlayerError: (playerError => console.error(playerError))
+    };
+
     return (
       <div class="container-fluid">
         <div className="App">
@@ -142,39 +140,28 @@ class App extends Component {
                 </div>
             </div>
             <div class="top-right">
-              <a href="http://localhost:8888/" class="btn btn-dark active" role="button" aria-pressed="true">Login using Spotify</a>
+              {!userAccessToken && <IntroScreen />}
             </div>
-            <button class="btn btn-small" onClick={() => this.skipBackSong()}><i class="fas fa-step-backward"></i></button>
-            <button class="btn btn-small" onClick={() => this.playCurrentSong()}><i class="fas fa-play"></i></button>
-            <button class="btn btn-small" onClick={() => this.pauseCurrentSong()}><i class="fas fa-pause-circle"></i></button>
-            <button class="btn btn-small" onClick={() => this.skipSong()}><i class="fas fa-step-forward"></i></button>
-              <div>
-                Now Playing: { this.state.nowPlaying.name }
-              </div>
-              <div>
-              By: { this.state.nowPlaying.artists }
-              </div>
-              <div>
-                <button style={{marigin: 20}} class='btn' onClick={() => this.getNowPlaying()}>Check Now Playing</button>
-              </div>
-              <div>
-                <img class="img rounded" src={ this.state.nowPlaying.image } style={{width: 400}}/>
-            </div>
-            <div>
-              Recently Played: { this.state.recentlyPlayed.name }
-            </div>
-            <div>
-            By: { this.state.recentlyPlayed.artists }
-            </div>
-            <div>
-              <button class='btn' onClick={() => this.getRecentlyPlayed()}>Check Recently Played</button>
-            </div>
-            <div>
-              <img class="img rounded" src={ this.state.recentlyPlayed.image } style={{width: 400}}/>
-            </div>
+
+            <main>
+            {userAccessToken &&
+              <WebPlaybackReact {...webPlaybackSdkProps}>
+
+              {!playerLoaded && !playerSelected &&
+                <Fragment>
+                  <h2 className="action-orange">Waiting for device to be selected</h2>
+                </Fragment>
+              }
+              {!playerLoaded && playerSelected && playerState &&
+                <Fragment>
+                  <NowPlayingScreen playerState={playerState} />
+                </Fragment>
+              }
+              </WebPlaybackReact>
+            }
+            </main>
             </div>
           </div>
     );
   }
 }
-export default App;
