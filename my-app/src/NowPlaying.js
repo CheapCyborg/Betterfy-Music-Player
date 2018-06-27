@@ -94,13 +94,13 @@ export default class NowPlaying extends Component {
 
       <div className="panel panel-default">
         <div className="panel-body">
+          <h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
+          <h4><a href={album_uri}>{album_name}</a></h4>
           <img src={album_image} alt={track_name} /><br></br>
           <button class="btn btn-small" onClick={() => this.skipBackSong()}><i class="fas fa-step-backward"></i></button>
           <button class="btn btn-small" onClick={() => this.playCurrentSong()}><i class="fas fa-play"></i></button>
           <button class="btn btn-small" onClick={() => this.pauseCurrentSong()}><i class="fas fa-pause-circle"></i></button>
           <button class="btn btn-small" onClick={() => this.skipSong()}><i class="fas fa-step-forward"></i></button><br></br>
-          <h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
-          <h4><a href={album_uri}>{album_name}</a></h4>
           <h4>ID: {id} | Position: {position_ms} | Duration: {duration_ms}</h4>
         </div>
         <div>
