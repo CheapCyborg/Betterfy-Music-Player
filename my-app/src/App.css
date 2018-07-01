@@ -31,3 +31,14 @@
   top: 0px;
   right: 0px;
 }
+.bottom-left {
+  position: absolute;
+  bottom: 0px;
+  left: 3px;
+}
+.slight-right {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}

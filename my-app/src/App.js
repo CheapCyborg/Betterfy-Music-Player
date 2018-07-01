@@ -4,6 +4,7 @@ import WebPlaybackReact from './WebPlaybackReact.js';
 import LoginCallback from './LoginCallback.js';
 import IntroScreen from './Intro.js';
 import NowPlayingScreen from './NowPlaying.js';
+import SearchScreen from './search.js';
 import './App.css';
 import './bootstrap.min.css';
 import fontawesome from '@fortawesome/fontawesome';
@@ -18,8 +19,8 @@ fontawesome.library.add(faStepForward);
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 window.onSpotifyWebPlaybackSDKReady = () => {};
-export default class App extends Component {
 
+export default class App extends Component {
   constructor() {
     super();
     const params = this.getHashParams();
@@ -27,6 +28,8 @@ export default class App extends Component {
     this.state = {
       loggedIn: accessToken ? true : false,
       value: '',
+      searchClicked: false,
+      backClicked: false,
       nowPlaying: {
         name: ' Not Checked  ',
         image: '',
@@ -37,21 +40,13 @@ export default class App extends Component {
         image: '',
         artists: ' Not Checked  '
       },
-      searchAlbums: {
-        name: '',
-        artists: '',
-        image: ''
-      },
       userDeviceId: null,
       userAccessToken: null,
-
       // Player state
       playerLoaded: false,
       playerSelected: false,
       playerState: null
     };
-    this.handleChange = this.handleChange.bind(this);
-
     if(params.access_token){
       spotifyWebApi.setAccessToken(accessToken)
     }
@@ -82,11 +77,6 @@ export default class App extends Component {
     console.error("The user access token has expired.");
   }
 
-  handleChange(event) {
-      this.setState({
-        value: event.target.value
-      });
-    }
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -97,18 +87,34 @@ export default class App extends Component {
     return hashParams;
   }
 
+ goSearch(){
+  this.setState({
+    searchClicked: true,
+    backClicked: false
+  })
+}
+
+goBack(){
+  this.setState({
+    searchClicked: false,
+    backClicked: true
+  })
+}
+
   render() {
     let {
       userDeviceId,
       userAccessToken,
       playerLoaded,
       playerSelected,
-      playerState
+      playerState,
+      searchClicked,
+      backClicked
     } = this.state;
 
     let webPlaybackSdkProps = {
       playerName: "Spotify React Player",
-      playerInitialVolume: 2.0,
+      playerInitialVolume: 1.0,
       playerRefreshRateMs: 100,
       playerAutoConnect: true,
       onPlayerRequestAccessToken: (() => userAccessToken),
@@ -126,23 +132,9 @@ export default class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to Betterfy</h1>
             </header>
-            <form class="form-inline">
-              <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
-              <button class="btn btn-small" id="clickMe" type="button" onClick={() => this.searchAlbums()}>Search</button>
-            </form>
-            <div class="text-left">
-              <strong>Artists: </strong>
-                {this.state.searchAlbums.artists} <br></br>
-              <strong>Album: </strong>
-                {this.state.searchAlbums.name} <br></br>
-                <div>
-                <img class="img rounded" src={ this.state.searchAlbums.image } style={{width: 200}}/>
-                </div>
-            </div>
             <div class="top-right">
               {!userAccessToken && <IntroScreen />}
             </div>
-
             <main>
             {userAccessToken &&
               <WebPlaybackReact {...webPlaybackSdkProps}>
@@ -152,9 +144,18 @@ export default class App extends Component {
                   <h2 className="action-orange">Waiting for device to be selected</h2>
                 </Fragment>
               }
-              {!playerLoaded && playerSelected && playerState &&
+
+              {!playerLoaded && !searchClicked && playerSelected && playerState &&
                 <Fragment>
+                  <button class="btn btn-small"type="button" onClick={() => this.goSearch()}>Search</button>
                   <NowPlayingScreen playerState={playerState} />
+                </Fragment>
+              }
+
+              {searchClicked && !backClicked &&
+                <Fragment>
+                  <SearchScreen playerState={playerState}/>
+                  <button class="btn btn-small" type="button" onClick={() => this.goBack()}>Back</button>
                 </Fragment>
               }
               </WebPlaybackReact>

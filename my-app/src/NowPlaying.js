@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 
+
 export default class NowPlaying extends Component {
   constructor() {
     super();
@@ -32,18 +33,6 @@ export default class NowPlaying extends Component {
       })
     })
   }
-  searchAlbums(){
-    spotifyWebApi.searchAlbums(this.state.value)
-    .then((response) => {
-      this.setState({
-        searchAlbums: {
-          artists: response.albums.items[0].artists[0].name,
-          name: response.albums.items[0].name,
-          image: response.albums.items[0].images[0].url
-        }
-      })
-    })
-  }
   playCurrentSong(){
     var Id = {
       deviceID: " "
@@ -56,7 +45,6 @@ export default class NowPlaying extends Component {
     }
     spotifyWebApi.pause(Id)
   }
-
   skipSong(){
     var Id = {
       deviceID: " "
@@ -91,7 +79,6 @@ export default class NowPlaying extends Component {
     } = playerState.track_window.current_track;
 
     return (
-
       <div className="panel panel-default">
         <div className="panel-body">
           <h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
@@ -107,7 +94,7 @@ export default class NowPlaying extends Component {
           Recently Played: { this.state.recentlyPlayed.name }
         </div>
         <div>
-        By: { this.state.recentlyPlayed.artists }
+          By: { this.state.recentlyPlayed.artists }
         </div>
         <div>
           <button class='btn' onClick={() => this.getRecentlyPlayed()}>Check Recently Played</button>
