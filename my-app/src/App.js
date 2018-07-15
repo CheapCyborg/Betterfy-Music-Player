@@ -7,15 +7,7 @@ import NowPlayingScreen from './NowPlaying.js';
 import SearchScreen from './search.js';
 import './App.css';
 import './bootstrap.min.css';
-import fontawesome from '@fortawesome/fontawesome';
-import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
-import faPauseCircle from '@fortawesome/fontawesome-free-solid/faPauseCircle';
-import faStepForward from '@fortawesome/fontawesome-free-solid/faStepForward';
-import faStepBackward from '@fortawesome/fontawesome-free-solid/faStepBackward';
-fontawesome.library.add(faStepBackward);
-fontawesome.library.add(faPlay);
-fontawesome.library.add(faPauseCircle);
-fontawesome.library.add(faStepForward);
+
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 window.onSpotifyWebPlaybackSDKReady = () => {};

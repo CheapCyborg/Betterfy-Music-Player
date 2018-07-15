@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Buttons from './Buttons.js';
+import './bootstrap.min.css';
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 
@@ -24,39 +26,33 @@ export default class NowPlaying extends Component {
   getRecentlyPlayed(){
     spotifyWebApi.getMyRecentlyPlayedTracks()
     .then((response) => {
+      for(var i = 0; i<response.length; i++){
       this.setState({
         recentlyPlayed: {
-          name: response.items[0].track.album.name,
-          image: response.items[0].track.album.images[0].url,
-          artists: response.items[0].track.artists[0].name
+          name: response.items[i].track.album.name,
+          image: response.items[i].track.album.images[0].url,
+          artists: response.items[i].track.artists[0].name
         }
       })
+    }
     })
   }
-  playCurrentSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.play(Id)
+
+getUserPlaylist(){
+  spotifyWebApi.getMySavedTracks()
+  .then((response) => {
+    for(var i = 0; i<response.length; i++){
+    this.setState({
+      recentlyPlayed: {
+        name: response.items[i].track.album.name,
+        image: response.items[i].track.album.images[0].url,
+        artists: response.items[i].track.artists[0].name
+      }
+    })
   }
-  pauseCurrentSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.pause(Id)
-  }
-  skipSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.skipToNext(Id)
-  }
-  skipBackSong(){
-    var Id = {
-      deviceID: " "
-    }
-    spotifyWebApi.skipToPrevious(Id)
-  }
+  })
+}
+
   render() {
     let {
       playerState,
@@ -79,28 +75,28 @@ export default class NowPlaying extends Component {
     } = playerState.track_window.current_track;
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-body">
-          <h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
-          <h4><a href={album_uri}>{album_name}</a></h4>
-          <img src={album_image} alt={track_name} /><br></br>
-          <button class="btn btn-small" onClick={() => this.skipBackSong()}><i class="fas fa-step-backward"></i></button>
-          <button class="btn btn-small" onClick={() => this.playCurrentSong()}><i class="fas fa-play"></i></button>
-          <button class="btn btn-small" onClick={() => this.pauseCurrentSong()}><i class="fas fa-pause-circle"></i></button>
-          <button class="btn btn-small" onClick={() => this.skipSong()}><i class="fas fa-step-forward"></i></button><br></br>
-          <h4>ID: {id} | Position: {position_ms} | Duration: {duration_ms}</h4>
-        </div>
-        <div>
-          Recently Played: { this.state.recentlyPlayed.name }
-        </div>
-        <div>
-          By: { this.state.recentlyPlayed.artists }
-        </div>
-        <div>
-          <button class='btn' onClick={() => this.getRecentlyPlayed()}>Check Recently Played</button>
-        </div>
-        <div>
-          <img class="img rounded" src={ this.state.recentlyPlayed.image } style={{width: 400}}/>
+      <div class="container">
+        <div className="panel panel-default">
+          <div className="panel-body">
+            <h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
+            <h4><a href={album_uri}>{album_name}</a></h4>
+            <img src={album_image} alt={track_name} /><br></br>
+            <Buttons/>
+            <h4>ID: {id} | Position: {position_ms} | Duration: {duration_ms}</h4>
+          </div>
+          <div>
+            Recently Played: { this.state.recentlyPlayed.name }
+          </div>
+          <div>
+            By: { this.state.recentlyPlayed.artists }
+          </div>
+          <div>
+            <button class='btn' onClick={() => this.getRecentlyPlayed()}>Check Recently Played</button>
+            <button class='btn' onClick={() => this.getUserPlaylist()}>Check Playlist</button>
+          </div>
+          <div>
+            <img class="img rounded" src={ this.state.recentlyPlayed.image } style={{width: 400}}/>
+          </div>
         </div>
       </div>
     );
