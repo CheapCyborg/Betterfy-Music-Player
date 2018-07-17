@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import WebPlaybackReact from './WebPlaybackReact.js';
-import './bootstrap.min.css';
-import Buttons from './Buttons.js';
+import '../../bootstrap.min.css';
+import Buttons from '../playButtons/Buttons';
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 window.onSpotifyWebPlaybackSDKReady = () => {};
@@ -29,18 +28,15 @@ export default class SearchScreen extends Component {
   searchAlbums(){
     spotifyWebApi.searchAlbums(this.state.value)
     .then((response) => {
-      var a = response;
-      var keys = Object.keys(a);
-      for(var i = 0; i < keys.length; i++) {
-        var key = (keys[i]);
+      for(var i = 0; i < response.albums.items.length; i++) {
+        console.log(response)
+        this.setState({
+          searchAlbums: {
+            
+          },
+          searchClicked: true
+        })
       }
-      var myJSON = JSON.stringify(a[key]);
-      this.setState({
-        searchAlbums: {
-          response: myJSON
-        },
-        searchClicked: true
-      })
     })
   }
 

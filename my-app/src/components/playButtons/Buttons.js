@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import WebPlaybackReact from './WebPlaybackReact.js';
+import WebPlaybackReact from '../../WebPlaybackReact';
 import fontawesome from '@fortawesome/fontawesome';
 import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
 import faPauseCircle from '@fortawesome/fontawesome-free-solid/faPauseCircle';

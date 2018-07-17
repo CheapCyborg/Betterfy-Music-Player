@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import logo from './logo.svg';
-import WebPlaybackReact from './WebPlaybackReact.js';
-import LoginCallback from './LoginCallback.js';
-import IntroScreen from './Intro.js';
-import NowPlayingScreen from './NowPlaying.js';
-import SearchScreen from './search.js';
+import WebPlaybackReact from './WebPlaybackReact';
+import LoginCallback from './components/Login/LoginCallback';
+import IntroScreen from './components/Intro/Intro';
+import NowPlayingScreen from './components/NowPlaying/NowPlaying';
+import SearchScreen from './components/search/search';
 import './App.css';
 import './bootstrap.min.css';
 
