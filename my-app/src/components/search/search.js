@@ -85,6 +85,7 @@ export default class SearchScreen extends Component {
                  })
               })
             }
+            
           return (
             <div class="result-container row">
               <div class="col-sm">
