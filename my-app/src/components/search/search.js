@@ -17,6 +17,7 @@ export default class SearchScreen extends Component {
       value: '',
       searchClicked: false,
       backClicked: false,
+      albumInfoClicked: false,
       searchAlbums: {
         response: []
       },
@@ -37,7 +38,7 @@ export default class SearchScreen extends Component {
       .then((response) => {
         this.setState({ 
           albums: response.albums.items ,
-          searchClicked: true
+          searchClicked: true,
         });
       });
   }
@@ -45,7 +46,6 @@ export default class SearchScreen extends Component {
   render() {
     let {
       searchClicked,
-      backClicked,
       playerLoaded,
       playerSelected,
     } = this.state;
@@ -55,39 +55,52 @@ export default class SearchScreen extends Component {
     } = this.props;
 
     let {
-      id,
       uri: track_uri,
       name: track_name,
-      duration_ms,
       artists: [{
         name: artist_name,
         uri: artist_uri
       }],
       album: {
-        name: album_name,
-        uri: album_uri,
-        images: [{ url: album_image }]
+        images: [{ url: album_image }],
+        id
       }
     } = playerState.track_window.current_track;
+
+    var albumTrackInfo = [];
+    var albumInfoClicked = false;
      
     if(searchClicked) {
-      const tooltip = (
-        <Tooltip id="tooltip">
-          <strong>Holy guacamole!</strong> Check this info.
-        </Tooltip>
-      );
       return this.state.albums.map((t) => {
        return t.artists.map((artistsArray) => {
+         var albumID = t.id
+         function albumInfo() {
+           albumInfoClicked = true;
+           console.log(albumID)
+             spotifyWebApi.getAlbumTracks(albumID)
+               .then((response) => {
+                 albumTrackInfo = response.items
+                 albumTrackInfo.map((albumTracks) => {
+                   console.log(albumTracks.name)
+                 })
+              })
+            }
           return (
             <div class="result-container row">
               <div class="col-sm">
               <img src={t.images[0].url} alt={t.name} class="image" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> 
                 <div class="middle">
                   <div key={t.name} class="text">
-                    Album: {t.name} <br></br>
-                    Artrist: {artistsArray.name}
+                    Album: <a href="#" onClick={() => albumInfo()}> {t.name} {albumTrackInfo} </a><br></br>
+                    {albumInfoClicked &&
+                      <div>
+                        <li>{albumTrackInfo}</li>
+                      </div>
+                    }
+                    Artrist: {artistsArray.name} <br></br>
                     <i class="fas fa-play"></i>
                   </div>
+             
                   </div>
               </div>
             </div>
@@ -110,7 +123,6 @@ export default class SearchScreen extends Component {
           <Buttons/>
         </div>
         <div>
-          <img class="img rounded" src={ this.state.searchAlbums.image } style={{width: 200}}/>
         </div>
         </main>
       </div>
