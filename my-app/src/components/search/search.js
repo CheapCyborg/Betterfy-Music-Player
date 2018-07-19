@@ -13,10 +13,12 @@ export default class SearchScreen extends Component {
       searchClicked: false,
       backClicked: false,
       searchAlbums: {
-        response:[]
-      }
+        response: []
+      },
+      albums: []
     };
     this.handleChange = this.handleChange.bind(this);
+    this.searchAlbums = this.searchAlbums.bind(this);
   }
 
   handleChange(event) {
@@ -25,19 +27,14 @@ export default class SearchScreen extends Component {
       });
     }
 
-  searchAlbums(){
+  searchAlbums() {
     spotifyWebApi.searchAlbums(this.state.value)
-    .then((response) => {
-      for(var i = 0; i < response.albums.items.length; i++) {
-        console.log(response)
-        this.setState({
-          searchAlbums: {
-            
-          },
+      .then((response) => {
+        this.setState({ 
+          albums: response.albums.items ,
           searchClicked: true
-        })
-      }
-    })
+        });
+      });
   }
 
   render() {
@@ -67,6 +64,20 @@ export default class SearchScreen extends Component {
         images: [{ url: album_image }]
       }
     } = playerState.track_window.current_track;
+     
+    if(searchClicked) {
+      return this.state.albums.map((t) => {
+       return t.artists.map((artistsArray, index) => {
+          return (
+            <div>
+              <li key={artistsArray.name}>
+                {artistsArray.name}
+              </li>
+            </div>
+          )
+       });
+    });
+  }
 
     return (
     <div class="container">
@@ -81,14 +92,6 @@ export default class SearchScreen extends Component {
         <div class="bottom-left">
           <Buttons/>
         </div>
-      {searchClicked &&
-        <Fragment>
-          <strong>Artists: </strong>
-          {this.state.searchAlbums.response} <br></br>
-          <strong>Album: </strong>
-          {this.state.searchAlbums.name} <br></br>
-        </Fragment>
-      }
         <div>
           <img class="img rounded" src={ this.state.searchAlbums.image } style={{width: 200}}/>
         </div>
