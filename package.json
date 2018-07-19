@@ -1,0 +1,27 @@
+{
+  "name": "test-music-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.4.1",
+    "react-json-table": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:client": "cd my-app && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CheapCyborg/Test-Music-Player.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CheapCyborg/Test-Music-Player/issues"
+  },
+  "homepage": "https://github.com/CheapCyborg/Test-Music-Player#readme"
+}

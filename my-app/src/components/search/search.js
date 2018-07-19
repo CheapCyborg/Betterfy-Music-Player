@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import '../../bootstrap.min.css';
+import './search.css';
 import Buttons from '../playButtons/Buttons';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import fontawesome from '@fortawesome/fontawesome';
+import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
+fontawesome.library.add(faPlay);
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 window.onSpotifyWebPlaybackSDKReady = () => {};
@@ -66,13 +71,25 @@ export default class SearchScreen extends Component {
     } = playerState.track_window.current_track;
      
     if(searchClicked) {
+      const tooltip = (
+        <Tooltip id="tooltip">
+          <strong>Holy guacamole!</strong> Check this info.
+        </Tooltip>
+      );
       return this.state.albums.map((t) => {
-       return t.artists.map((artistsArray, index) => {
+       return t.artists.map((artistsArray) => {
           return (
-            <div>
-              <li key={artistsArray.name}>
-                {artistsArray.name}
-              </li>
+            <div class="result-container row">
+              <div class="col-sm">
+              <img src={t.images[0].url} alt={t.name} class="image" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> 
+                <div class="middle">
+                  <div key={t.name} class="text">
+                    Album: {t.name} <br></br>
+                    Artrist: {artistsArray.name}
+                    <i class="fas fa-play"></i>
+                  </div>
+                  </div>
+              </div>
             </div>
           )
        });
