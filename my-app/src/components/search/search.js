@@ -23,8 +23,7 @@ export default class SearchScreen extends Component {
         response: []
       },
       albums: [],
-      tracks: ['']
-
+      tracks: [''],
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchAlbums = this.searchAlbums.bind(this);
@@ -71,7 +70,7 @@ export default class SearchScreen extends Component {
     } = playerState.track_window.current_track;
 
     var albumTrackInfo = [];
-    var albumInfoClicked = false;
+  
     if(searchClicked) {
       return this.state.albums.map((t, counter) => {
        return t.artists.map((artistsArray) => {
@@ -82,60 +81,45 @@ export default class SearchScreen extends Component {
          var artistName = artistsArray.name
           const albumInfo = () => {
             console.log(albumUri)
-            if(this.state.uriSet){
-            playerState.track_window.current_track = {
-              uri: this.state.id,
-              id: albumID,
-              name: track_name,
-              artists: [{
-                name: artistName,
-                uri: artistsUri
-              }],
-              album: {
-                images: [{ url: image }],
-                uri: albumUri,
-              }
-            }
-              var Id = {
-                deviceID: " ",
-                albumID: albumID
-              }
-              console.log(playerState.track_window.current_track)
-          }
-           albumInfoClicked = true;
            console.log(albumID)
              spotifyWebApi.getAlbumTracks(albumID)
                .then(response => {
                  albumTrackInfo = response.items
-                 let trackArray = albumTrackInfo.map((albumTrack) => { return " " + albumTrack.name });
-                 let idArray = albumTrackInfo.map((trackID)=> { return trackID.uri})
+                 let trackArray = albumTrackInfo.map((albumTrack, counted) => { counted += 1; return " " + counted + ". " + albumTrack.name});
+                 albumTrackInfo.map((trackInfo)=> {
+                console.log(trackInfo.uri)
                  this.setState({
                    tracks: trackArray,
-                   id: idArray[0],
                    albumInfoClicked: true,
+                   uri: trackInfo,
                    uriSet: true
                  })
-                 
-                 console.log(this.state.tracks) 
-                 console.log(this.state.id)              
+                 spotifyWebApi.play({
+                   "context_uri": albumUri,
+                   "offset": {
+                     "position": 0,
+                   }
+                 })          
               })
+               })
             }
             
           return (
-            <div class="result-container row">
-              <div class="row">
-                <img src={t.images[0].url} alt={t.name} class="image" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
+            <div class="result-container">
+                <div class="text-center">
+                <img src={t.images[0].url} alt={t.name} class="image rounded mx-auto d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
+                </div>
                 <div class="middle">
                   <div key={t.name} class="text">
                     <a href="#" onClick={() => albumInfo()}> {t.name} </a><br></br>
                     {this.state.albumInfoClicked &&
                       <div>
-                        <iframe src={"https://open.spotify.com/embed?uri=" + albumUri} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        {this.state.tracks + ""}
                       </div>
                     }
+                    
                   </div>
                   </div>
-              </div>
             </div>
           )
        });
@@ -154,6 +138,7 @@ export default class SearchScreen extends Component {
           <img src={album_image} alt={track_name} /><br></br><h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
         </div>
         <div class="bottom-left">
+        <Buttons />
         </div>
         <div>
         </div>
@@ -162,3 +147,4 @@ export default class SearchScreen extends Component {
     );
   };
 }
+
