@@ -18,10 +18,13 @@ export default class SearchScreen extends Component {
       searchClicked: false,
       backClicked: false,
       albumInfoClicked: false,
+      uriSet: false,
       searchAlbums: {
         response: []
       },
-      albums: []
+      albums: [],
+      tracks: ['']
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchAlbums = this.searchAlbums.bind(this);
@@ -63,45 +66,74 @@ export default class SearchScreen extends Component {
       }],
       album: {
         images: [{ url: album_image }],
-        id
+        uri: album_uri,
       }
     } = playerState.track_window.current_track;
 
     var albumTrackInfo = [];
     var albumInfoClicked = false;
-     
     if(searchClicked) {
-      return this.state.albums.map((t) => {
+      return this.state.albums.map((t, counter) => {
        return t.artists.map((artistsArray) => {
-         var albumID = t.id
-         function albumInfo() {
+         var albumUri = t.uri
+         var albumID = t.id;
+         var image = t.images[0].url;
+         var artistsUri = artistsArray.uri;
+         var artistName = artistsArray.name
+          const albumInfo = () => {
+            console.log(albumUri)
+            if(this.state.uriSet){
+            playerState.track_window.current_track = {
+              uri: this.state.id,
+              id: albumID,
+              name: track_name,
+              artists: [{
+                name: artistName,
+                uri: artistsUri
+              }],
+              album: {
+                images: [{ url: image }],
+                uri: albumUri,
+              }
+            }
+              var Id = {
+                deviceID: " ",
+                albumID: albumID
+              }
+              console.log(playerState.track_window.current_track)
+          }
            albumInfoClicked = true;
            console.log(albumID)
              spotifyWebApi.getAlbumTracks(albumID)
-               .then((response) => {
+               .then(response => {
                  albumTrackInfo = response.items
-                 albumTrackInfo.map((albumTracks) => {
-                   console.log(albumTracks.name)
+                 let trackArray = albumTrackInfo.map((albumTrack) => { return " " + albumTrack.name });
+                 let idArray = albumTrackInfo.map((trackID)=> { return trackID.uri})
+                 this.setState({
+                   tracks: trackArray,
+                   id: idArray[0],
+                   albumInfoClicked: true,
+                   uriSet: true
                  })
+                 
+                 console.log(this.state.tracks) 
+                 console.log(this.state.id)              
               })
             }
             
           return (
             <div class="result-container row">
-              <div class="col-sm">
-              <img src={t.images[0].url} alt={t.name} class="image" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> 
+              <div class="row">
+                <img src={t.images[0].url} alt={t.name} class="image" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
                 <div class="middle">
                   <div key={t.name} class="text">
-                    Album: <a href="#" onClick={() => albumInfo()}> {t.name} {albumTrackInfo} </a><br></br>
-                    {albumInfoClicked &&
+                    <a href="#" onClick={() => albumInfo()}> {t.name} </a><br></br>
+                    {this.state.albumInfoClicked &&
                       <div>
-                        <li>{albumTrackInfo}</li>
+                        <iframe src={"https://open.spotify.com/embed?uri=" + albumUri} width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                       </div>
                     }
-                    Artrist: {artistsArray.name} <br></br>
-                    <i class="fas fa-play"></i>
                   </div>
-             
                   </div>
               </div>
             </div>
@@ -109,6 +141,7 @@ export default class SearchScreen extends Component {
        });
     });
   }
+  
 
     return (
     <div class="container">
@@ -121,7 +154,6 @@ export default class SearchScreen extends Component {
           <img src={album_image} alt={track_name} /><br></br><h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
         </div>
         <div class="bottom-left">
-          <Buttons/>
         </div>
         <div>
         </div>
