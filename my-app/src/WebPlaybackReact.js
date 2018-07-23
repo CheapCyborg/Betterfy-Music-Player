@@ -1,4 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import './index.css'
+import './bootstrap.min.css';
 
 export default class WebPlayback extends Component {
   deviceSelectedInterval = null
@@ -8,6 +12,12 @@ export default class WebPlayback extends Component {
   state = {
     playerReady: false,
     playerSelected: true
+  }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      volume: this.props.playerInitialVolume
+    };
   }
 
   async handleState(state) {
@@ -113,6 +123,16 @@ export default class WebPlayback extends Component {
     });
   }
 
+  handleChange = (value) => {
+    this.setState({
+      volume: value
+    })
+    this.webPlaybackInstance.setVolume(value).then(() => {
+      console.log('Volume updated!');
+    });
+  }
+ 
+
   async componentWillMount() {
     // Notify the player is loading
 
@@ -133,6 +153,29 @@ export default class WebPlayback extends Component {
   }
 
   render() {
-    return (<Fragment>{this.props.children}</Fragment>);
+    let { volume } = this.state
+    let volume_percentage = volume * 100
+    const wrapperStyle = { width: 300, margin: 50 };
+
+    return (
+    <div class="container">
+      <div class="slight-right">
+        <div style={wrapperStyle}>
+          <div class="slider-group">
+            <div class="rangeslider-horizontal">
+                <div class='value'>{volume_percentage}</div>
+              <Slider
+              min={0}
+              max={1}
+              step={0.1}
+              value={volume}
+              onChange={this.handleChange}
+            />
+            </div>
+          </div>
+        </div>
+      </div>
+      {this.props.children}
+    </div>);
   }
 };

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import WebPlaybackReact from './WebPlaybackReact';
 import LoginCallback from './components/Login/LoginCallback';
 import IntroScreen from './components/Intro/Intro';
+import UserPlaylist from './components/UserPlaylist';
 import NowPlayingScreen from './components/NowPlaying/NowPlaying';
 import SearchScreen from './components/search/search';
 import './App.css';
@@ -139,15 +140,16 @@ goBack(){
 
               {!playerLoaded && !searchClicked && playerSelected && playerState &&
                 <Fragment>
-                  <button class="btn btn-small"type="button" onClick={() => this.goSearch()}>Search</button>
+                  <button class="btn btn-small top-right"type="button" onClick={() => this.goSearch()}>Search</button>
                   <NowPlayingScreen playerState={playerState} />
+                  <UserPlaylist/>
                 </Fragment>
               }
 
               {searchClicked && !backClicked &&
                 <Fragment>
                   <SearchScreen playerState={playerState}/>
-                  <button class="btn btn-small" type="button" onClick={() => this.goBack()}>Back</button>
+                  <button class="btn btn-small top-right" type="button" onClick={() => this.goBack()}>Back</button>
                 </Fragment>
               }
               </WebPlaybackReact>

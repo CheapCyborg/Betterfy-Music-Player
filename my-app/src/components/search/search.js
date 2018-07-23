@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import '../../bootstrap.min.css';
 import './search.css';
 import Buttons from '../playButtons/Buttons';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import fontawesome from '@fortawesome/fontawesome';
 import faPlay from '@fortawesome/fontawesome-free-solid/faPlay';
 fontawesome.library.add(faPlay);
@@ -76,9 +75,6 @@ export default class SearchScreen extends Component {
        return t.artists.map((artistsArray) => {
          var albumUri = t.uri
          var albumID = t.id;
-         var image = t.images[0].url;
-         var artistsUri = artistsArray.uri;
-         var artistName = artistsArray.name
           const albumInfo = () => {
             console.log(albumUri)
            console.log(albumID)
@@ -107,7 +103,7 @@ export default class SearchScreen extends Component {
           return (
             <div class="result-container">
                 <div class="text-center">
-                <img src={t.images[0].url} alt={t.name} class="image rounded mx-auto d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
+                  <img key={counter} src={t.images[0].url} alt={t.name} class="image rounded d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
                 </div>
                 <div class="middle">
                   <div key={t.name} class="text">
@@ -117,7 +113,6 @@ export default class SearchScreen extends Component {
                         {this.state.tracks + ""}
                       </div>
                     }
-                    
                   </div>
                   </div>
             </div>
@@ -128,22 +123,24 @@ export default class SearchScreen extends Component {
   
 
     return (
-    <div class="container">
+    <div class="container-fluid">
       <main>
         <form>
           <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
           <button class="btn btn-small" type="button" onClick={() => this.searchAlbums()}>Search</button>
-        </form>
-        <div class="slight-right col">
-          <img src={album_image} alt={track_name} /><br></br><h4><a href={track_uri}>{track_name}</a> by <a href={artist_uri}>{artist_name}</a></h4>
+        </form> 
+        <div class="bottom-left right">
+            <div class="media">
+              <img src={album_image} alt={track_name} class="align-self-center mr-3" />
+              <div class="media-body">
+                <h4 class="mt-0"><a href={track_uri}>{track_name}</a> 
+                <br></br>by <a href={artist_uri}>{artist_name}</a></h4>
+                <Buttons />
+              </div>
+            </div>
         </div>
-        <div class="bottom-left">
-        <Buttons />
-        </div>
-        <div>
-        </div>
-        </main>
-      </div>
+       </main>
+     </div>
     );
   };
 }

@@ -1,3 +1,8 @@
+@font-face {
+font-family: FlyboyBB;
+src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf");
+}
+
 .App {
   text-align: center;
 }
@@ -37,8 +42,20 @@
   left: 3px;
 }
 .slight-right {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  position: absolute;
+  left: 0;
+  top: 65%;
+  right: 20%;
 }
+.value{
+  font-family: Aller;
+  font-size: 30px;
+  color: black;
+  position: relative;
+}
+
+.right {
+  left: 2%;
+  bottom: 2%;
+}
+
