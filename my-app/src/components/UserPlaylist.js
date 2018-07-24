@@ -34,7 +34,8 @@ export default class UserPlaylist extends Component {
 
     render(){
 
-        const columns = [{
+        const columns = 
+        [{
             Header: 'Songs',
             accessor: 'name' // String-based value accessors!
         }, {

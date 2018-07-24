@@ -155,10 +155,10 @@ export default class WebPlayback extends Component {
   render() {
     let { volume } = this.state
     let volume_percentage = volume * 100
-    const wrapperStyle = { width: 300, margin: 50 };
+    const wrapperStyle = { width: 300, margin: 10 };
 
     return (
-    <div class="container">
+    <div class="container-fluid">
       <div class="slight-right">
         <div style={wrapperStyle}>
           <div class="slider-group">

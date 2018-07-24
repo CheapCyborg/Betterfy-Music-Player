@@ -41,20 +41,16 @@ export default class NowPlaying extends Component {
     
 
     return (
-      <div class="container-fluid">
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <div class="bottom-left right">
-              <div class="media">
+      <div class="container">
+            <div class="results-container">
+          <div class="bottom-left">
                 <img src={album_image} alt={track_name} class="align-self-center mr-3" />
-                <div class="media-body">
+                <div class="">
                   <h4><a href={track_uri}>{track_name}</a><br></br> by <a href={artist_uri}>{artist_name}</a></h4>
                   <h4><a href={album_uri}>{album_name}</a></h4>
                   <Buttons />
                   <h4>Position: {position_ms} | Duration: {duration_ms}</h4>
                 </div>
-              </div>
-            </div>
           </div>
           <div>
             <img class="img rounded" src={ this.state.recentlyPlayed.image } style={{width: 400}}/>

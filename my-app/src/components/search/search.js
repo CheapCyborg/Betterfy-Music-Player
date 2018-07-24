@@ -129,7 +129,7 @@ export default class SearchScreen extends Component {
           <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
           <button class="btn btn-small" type="button" onClick={() => this.searchAlbums()}>Search</button>
         </form> 
-        <div class="bottom-left right">
+        <div class="left   right">
             <div class="media">
               <img src={album_image} alt={track_name} class="align-self-center mr-3" />
               <div class="media-body">
