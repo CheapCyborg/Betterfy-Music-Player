@@ -167,7 +167,7 @@ export default class WebPlayback extends Component {
               <Slider
               min={0}
               max={1}
-              step={0.1}
+              step={0.01}
               value={volume}
               onChange={this.handleChange}
             />
