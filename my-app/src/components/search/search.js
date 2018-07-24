@@ -13,16 +13,12 @@ export default class SearchScreen extends Component {
   constructor() {
     super();
     this.state = {
-      value: '',
       searchClicked: false,
       backClicked: false,
       albumInfoClicked: false,
       uriSet: false,
-      searchAlbums: {
-        response: []
-      },
       albums: [],
-      tracks: [''],
+      tracks: ['']
     };
     this.handleChange = this.handleChange.bind(this);
     this.searchAlbums = this.searchAlbums.bind(this);

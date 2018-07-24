@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Buttons from '../playButtons/Buttons';
 import '../../bootstrap.min.css';
+
 var Spotify = require('spotify-web-api-js');
 const spotifyWebApi = new Spotify();
 window.onSpotifyWebPlaybackSDKReady = () => { };

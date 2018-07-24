@@ -23,16 +23,6 @@ export default class App extends Component {
       value: '',
       searchClicked: false,
       backClicked: false,
-      nowPlaying: {
-        name: ' Not Checked  ',
-        image: '',
-        artists: ' Not Checked  '
-      },
-      recentlyPlayed: {
-        name: '',
-        image: '',
-        artists: ' Not Checked  '
-      },
       userDeviceId: null,
       userAccessToken: null,
       // Player state
