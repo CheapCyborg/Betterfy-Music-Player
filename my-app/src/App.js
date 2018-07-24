@@ -4,6 +4,7 @@ import WebPlaybackReact from './WebPlaybackReact';
 import LoginCallback from './components/Login/LoginCallback';
 import IntroScreen from './components/Intro/Intro';
 import UserPlaylist from './components/UserPlaylist';
+import UserInfo from './components/UserInfo';
 import NowPlayingScreen from './components/NowPlaying/NowPlaying';
 import SearchScreen from './components/search/search';
 import './App.css';
@@ -109,9 +110,8 @@ goBack(){
     };
 
     return (
-      <div class="container">
+      <div class="container-fluid">
         <div className="App">
-
             <div class="top-right">
               {!userAccessToken && <IntroScreen />}
             </div>
@@ -128,8 +128,8 @@ goBack(){
               {!playerLoaded && !searchClicked && playerSelected && playerState &&
                 <Fragment>
                   <button class="btn btn-small top-right"type="button" onClick={() => this.goSearch()}>Search</button>
-                  <NowPlayingScreen playerState={playerState} />
-                  <UserPlaylist/>
+                <UserPlaylist />
+                <UserInfo /> <NowPlayingScreen playerState={playerState} />
                 </Fragment>
               }
 

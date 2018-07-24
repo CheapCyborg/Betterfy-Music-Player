@@ -42,8 +42,8 @@ export default class NowPlaying extends Component {
     
 
     return (
-      <div class="container">
-            <div class="results-container">
+      <div class="container-fluid">
+        <div class="results-container">
           <div class="bottom-left">
                 <img src={album_image} alt={track_name} class="align-self-center mr-3" />
                 <div class="">
@@ -52,9 +52,6 @@ export default class NowPlaying extends Component {
                   <Buttons />
                   <h4>Position: {position_ms} | Duration: {duration_ms}</h4>
                 </div>
-          </div>
-          <div>
-            <img class="img rounded" src={ this.state.recentlyPlayed.image } style={{width: 400}}/>
           </div>
         </div>
       </div>

@@ -41,10 +41,9 @@ src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf");
   bottom: 0%;
 }
 .slight-right {
-  position: absolute;
+  position: relative;
   left: 0;
-  top: 65%;
-  right: 20%;
+  bottom: 0%
 }
 .value{
   font-family: Aller;

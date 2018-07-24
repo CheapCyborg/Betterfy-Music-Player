@@ -1,0 +1,27 @@
+.user-card {
+    position: absolute;
+    transition: 0.3s;
+    padding-top: 5%;
+}
+.user-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+}
+.image{
+    width: 100%;
+    padding-top: 0%;
+    border: 2px solid black;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.info {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+     padding: 10% 10px;
+     text-align: left;
+     background-color: antiquewhite;
+     border: 2px solid black;
+}
+.info:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+}
+
+

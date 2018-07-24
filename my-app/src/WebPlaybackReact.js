@@ -161,8 +161,8 @@ export default class WebPlayback extends Component {
     <div class="container-fluid">
       <div class="slight-right">
         <div style={wrapperStyle}>
-          <div class="slider-group">
-            <div class="rangeslider-horizontal">
+          <div class="">
+            <div class="">
                 <div class='value'>{volume_percentage}</div>
               <Slider
               min={0}

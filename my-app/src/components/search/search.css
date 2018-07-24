@@ -5,7 +5,7 @@
   padding-top: 5%
 }
 
-.image {
+.images {
   opacity: 1;
   display: inline-block;
   transition: .5s ease;
@@ -27,7 +27,7 @@
   text-align: center;
 }
 
-.result-container:hover .image {
+.result-container:hover .images {
   opacity: 0.3;
   transform: translate(150%, 40%);
   z-index:99;

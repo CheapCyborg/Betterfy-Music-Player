@@ -99,7 +99,7 @@ export default class SearchScreen extends Component {
           return (
             <div class="result-container">
                 <div class="text-center">
-                  <img key={counter} src={t.images[0].url} alt={t.name} class="image rounded d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
+                  <img key={counter} src={t.images[0].url} alt={t.name} class="images rounded d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
                 </div>
                 <div class="middle">
                   <div key={t.name} class="text">
@@ -119,7 +119,7 @@ export default class SearchScreen extends Component {
   
 
     return (
-    <div class="container-fluid">
+    <div class="container">
       <main>
         <form>
           <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
