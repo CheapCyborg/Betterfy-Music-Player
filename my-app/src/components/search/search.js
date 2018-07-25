@@ -97,6 +97,7 @@ export default class SearchScreen extends Component {
             }
             
           return (
+            <div class="container-fluid">
             <div class="result-container">
                 <div class="text-center">
                   <img key={counter} src={t.images[0].url} alt={t.name} class="images rounded d-block" height="256px" width="256px" data-toggle="tooltip" data-placement="top" title="Hooray!" /> {counter}
@@ -112,6 +113,7 @@ export default class SearchScreen extends Component {
                   </div>
                   </div>
             </div>
+            </div>
           )
        });
     });
@@ -119,7 +121,7 @@ export default class SearchScreen extends Component {
   
 
     return (
-    <div class="container">
+    <div class="container-fluid">
       <main>
         <form>
           <input type="text" id="searchAlbums" class='' value={this.state.value} onChange={this.handleChange} placeholder="Search for an Album"/>
@@ -127,7 +129,7 @@ export default class SearchScreen extends Component {
         </form> 
         <div class="left   right">
             <div class="media">
-              <img src={album_image} alt={track_name} class="align-self-center mr-3" />
+              <img src={album_image} alt={track_name} class="align-self-center mr-3 images" />
               <div class="media-body">
                 <h4 class="mt-0"><a href={track_uri}>{track_name}</a> 
                 <br></br>by <a href={artist_uri}>{artist_name}</a></h4>

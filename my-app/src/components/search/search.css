@@ -2,7 +2,8 @@
   float:left;
   display: block;
   position: relative;
-  padding-top: 5%
+  padding-top: 1%;
+  padding-left: 17%;
 }
 
 .images {
@@ -11,9 +12,8 @@
   transition: .5s ease;
   backface-visibility: hidden;
   position: relative;
-  margin-bottom: -15%;
-  margin-top: -10%;
   
+  border: 2px solid black
 }
 
 .middle {
@@ -41,8 +41,7 @@
 
 .text {
   background-color: black;
-  color: white;
+  color: #DADAD9;
   font-size: 16px;
   padding: 16px 16px;
 }
-

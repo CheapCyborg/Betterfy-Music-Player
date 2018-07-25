@@ -129,7 +129,8 @@ goBack(){
                 <Fragment>
                   <button class="btn btn-small top-right"type="button" onClick={() => this.goSearch()}>Search</button>
                 <UserPlaylist />
-                <UserInfo /> <NowPlayingScreen playerState={playerState} />
+                <NowPlayingScreen playerState={playerState} />
+                <UserInfo /> 
                 </Fragment>
               }
 

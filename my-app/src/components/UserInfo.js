@@ -25,7 +25,6 @@ export default class UserInfo extends Component {
                 images: response.images[0].url,
                 userURL: response.external_urls.spotify
             })
-            console.log(response)
         })
     }
     render(){

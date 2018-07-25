@@ -50,6 +50,7 @@ export default class UserPlaylist extends Component {
                 data={this.state.recentlyPlayed.response}
                 columns={columns}
                 defaultPageSize={10}
+                showPageJump = {false}
                 getTrProps={(state, rowInfo, name, instance) => {
                     return {
                         onClick: (e, handleOriginal) => {

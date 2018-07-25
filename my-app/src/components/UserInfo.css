@@ -2,6 +2,7 @@
     position: absolute;
     transition: 0.3s;
     padding-top: 5%;
+    right: 0%
 }
 .user-card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
@@ -17,8 +18,9 @@
      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
      padding: 10% 10px;
      text-align: left;
-     background-color: antiquewhite;
+     background-color: #DADAD9;
      border: 2px solid black;
+     color: #353A41;    
 }
 .info:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);

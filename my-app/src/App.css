@@ -1,6 +1,14 @@
 @font-face {
-font-family: FlyboyBB;
-src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf");
+font-family: FlyboyBB, Aller;
+src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf"), url("./Fonts/absender1.ttf"), url("./Fonts/Comfortaa-Regular.ttf");
+}
+@font-face {
+font-family: Absender;
+src: url("./Fonts/absender1.ttf"), url("./Fonts/Comfortaa-Regular.ttf");
+}
+@font-face {
+font-family: Comforta;
+src: url("./Fonts/Comfortaa-Regular.ttf");
 }
 
 .App {
@@ -33,12 +41,12 @@ src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf");
 }
 .top-right {
   position: absolute;
-  top: 0px;
+  top: 1%;
   right: 0px;
 }
 .bottom-left {
-  position: relative;
-  bottom: 0%;
+  position: absolute;
+  padding-top: 1%;
 }
 .slight-right {
   position: relative;
@@ -68,3 +76,19 @@ src: url("./Fonts/FlyBoyBB.ttf"), url("./Fonts/Aller_Std_Rg.ttf");
   height: 100%;
 }
 
+.song {
+     padding: 10% 10px;
+     text-align: center;  
+}
+
+.img-border {
+  border: 2px solid black;
+}
+.all-text {
+  color: black;
+  font-family: Absender;
+}
+.some-text{
+  color:black;
+  font-family: Comforta;
+}

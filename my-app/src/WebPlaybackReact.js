@@ -153,28 +153,9 @@ export default class WebPlayback extends Component {
   }
 
   render() {
-    let { volume } = this.state
-    let volume_percentage = volume * 100
-    const wrapperStyle = { width: 300, margin: 10 };
 
     return (
-    <div class="container-fluid">
-      <div class="slight-right">
-        <div style={wrapperStyle}>
-          <div class="">
-            <div class="">
-                <div class='value'>{volume_percentage}</div>
-              <Slider
-              min={0}
-              max={1}
-              step={0.01}
-              value={volume}
-              onChange={this.handleChange}
-            />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="">
       {this.props.children}
     </div>);
   }
