@@ -155,7 +155,7 @@ export default class WebPlayback extends Component {
   render() {
 
     return (
-    <div class="">
+    <div class="container-fluid">
       {this.props.children}
     </div>);
   }

@@ -92,3 +92,8 @@ src: url("./Fonts/Comfortaa-Regular.ttf");
   color:black;
   font-family: Comforta;
 }
+
+.shuffled {
+  color: red;
+}
+
