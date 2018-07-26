@@ -1,17 +1,22 @@
-export default (callbacks) => {
-  let { location: {hash} } = window;
+export default callbacks => {
+  let {
+    location: { hash }
+  } = window;
   let hashExists = hash.length > 0;
-  let hashObj = hash.substring(1).split('&').reduce((initial, item) => {
-    if (item) {
-      const parts = item.split('=');
-      initial[parts[0]] = decodeURIComponent(parts[1]);
-    }
-    return initial;
-  }, {});
+  let hashObj = hash
+    .substring(1)
+    .split("&")
+    .reduce((initial, item) => {
+      if (item) {
+        const parts = item.split("=");
+        initial[parts[0]] = decodeURIComponent(parts[1]);
+      }
+      return initial;
+    }, {});
 
   if (hashExists) {
-    window.location.hash = '';
-        
+    window.location.hash = "";
+
     // Let us know it's a successful authorization
     if (typeof callbacks.onSuccessfulAuthorization !== "undefined") {
       callbacks.onSuccessfulAuthorization(hashObj.access_token);
@@ -25,8 +30,7 @@ export default (callbacks) => {
     }, hashObj.expires_in * 1000);
 
     return hashObj.access_token;
-  }
-  else {
+  } else {
     return null;
   }
 };

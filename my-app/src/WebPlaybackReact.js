@@ -1,18 +1,17 @@
-import React, { Component, Fragment } from 'react';
-import Slider, { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
-import './index.css'
-import './bootstrap.min.css';
+import React, { Component } from "react";
+import "rc-slider/assets/index.css";
+import "./index.css";
+import "./bootstrap.min.css";
 
 export default class WebPlayback extends Component {
-  deviceSelectedInterval = null
-  statePollingInterval = null
-  webPlaybackInstance = null
+  deviceSelectedInterval = null;
+  statePollingInterval = null;
+  webPlaybackInstance = null;
 
   state = {
     playerReady: false,
     playerSelected: true
-  }
+  };
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -37,10 +36,12 @@ export default class WebPlayback extends Component {
 
   waitForSpotify() {
     return new Promise(resolve => {
-      if ('Spotify' in window) {
+      if ("Spotify" in window) {
         resolve();
       } else {
-        window.onSpotifyWebPlaybackSDKReady = () => { resolve(); };
+        window.onSpotifyWebPlaybackSDKReady = () => {
+          resolve();
+        };
       }
     });
   }
@@ -123,19 +124,17 @@ export default class WebPlayback extends Component {
     });
   }
 
-  handleChange = (value) => {
+  handleChange = value => {
     this.setState({
       volume: value
-    })
-    this.webPlaybackInstance.setVolume(value).then(() => {
-      console.log('Volume updated!');
     });
-  }
- 
+    this.webPlaybackInstance.setVolume(value).then(() => {
+      console.log("Volume updated!");
+    });
+  };
 
   async componentWillMount() {
     // Notify the player is loading
-
 
     // Wait for Spotify to load player
     await this.waitForSpotify();
@@ -153,10 +152,6 @@ export default class WebPlayback extends Component {
   }
 
   render() {
-
-    return (
-    <div class="container-fluid">
-      {this.props.children}
-    </div>);
+    return <div class="container-fluid">{this.props.children}</div>;
   }
-};
+}

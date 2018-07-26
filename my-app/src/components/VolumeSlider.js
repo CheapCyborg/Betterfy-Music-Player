@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import VSlider, { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
+import React, { Component } from "react";
+import VSlider from "rc-slider";
+import "rc-slider/assets/index.css";
 
-var Spotify = require('spotify-web-api-js');
+var Spotify = require("spotify-web-api-js");
 const spotifyWebApi = new Spotify();
 
 export default class VolumeSlider extends Component {
@@ -13,21 +13,20 @@ export default class VolumeSlider extends Component {
         };
     }
 
-    handleChange = (value) => {
+    handleChange = value => {
         this.setState({
             volume: value
-        })
+        });
         var Id = {
             deviceID: " "
-        }
+        };
         spotifyWebApi.setVolume(value, Id).then(() => {
-            console.log('Volume updated!');
+            console.log("Volume updated!");
         });
-    }
+    };
 
     render() {
-        let { volume } = this.state
-        let volume_percentage = volume
+        let { volume } = this.state;
         const wrapperStyle = { width: 300, margin: 30 };
 
         return (
