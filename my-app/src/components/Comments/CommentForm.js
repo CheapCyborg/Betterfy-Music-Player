@@ -16,7 +16,7 @@ CommentForm.propTypes = {
     author: PropTypes.string,
 };
 
-CommentForm.defaultProps = {
+CommentForm.defaultProps = { 
     text: '',
     author: '',
 };

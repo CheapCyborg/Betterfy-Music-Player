@@ -9,5 +9,16 @@ const CommentsSchema = new Schema({
     timestamps: true
 });
 
+const UserSchema = new Schema({
+    userID: String,
+    birthdate: String,
+    country: String,
+    name: String,
+    email: String,
+    product: String
+})
+
 // export module to use in server.js
-export default mongoose.model('Comment', CommentsSchema);
+const Comment = mongoose.model('Comment', CommentsSchema);
+const User  = mongoose.model('User', UserSchema);
+module.exports = {Comment, User};
