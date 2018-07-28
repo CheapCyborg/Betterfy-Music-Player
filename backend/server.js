@@ -16,7 +16,7 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-app.use(logger("dev"));
+app.use(logger("dev"))
 
 // Use our router configuration when we call /api
 app.use("/api", router);
