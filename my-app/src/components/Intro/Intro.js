@@ -14,6 +14,7 @@ export default class IntroScreen extends Component {
   render() {
     return (
       <Fragment>
+        <h3 class="some-text">Betterfy</h3>
         <button className="btn btn-md btn-violet" onClick={this.buttonClick}>
           Log in with Spotify
 				</button>

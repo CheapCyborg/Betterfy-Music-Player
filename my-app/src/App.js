@@ -120,7 +120,7 @@ export default class App extends Component {
 									!playerSelected && (
 										<Fragment>
 											<h2 className="action-orange">
-												Waiting for device to be selected
+												Please go to Spotify and select "Spotify React Player" in the "Devices" drop down
 											</h2>
 										</Fragment>
 									)}
