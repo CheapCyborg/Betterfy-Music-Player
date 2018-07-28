@@ -8,7 +8,7 @@ import {Comment, User} from "./models/comment.js";
 const app = express();
 const router = express.Router();
 
-const API_PORT = process.env.API_PORT;
+const API_PORT = process.env.PORT;
 
 app.use(
     bodyParser.urlencoded({
