@@ -1,0 +1,6 @@
+{
+    "root": "api/",
+    "routes": {
+        "/**": "index.html"
+    }
+}
