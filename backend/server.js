@@ -57,7 +57,7 @@ router.post("/Users", (req, res) => {
 
 // Comment Routes
 router.get("/", (req, res) => {
-    res.json({ message: "Hello, World!" });
+    res.sendFile('../my-app/public/index.html');
 });
 
 router.post("/comments", (req, res) => {
