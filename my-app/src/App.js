@@ -112,7 +112,7 @@ export default class App extends Component {
 		return (
 			<div class="container-fluid">
 				<div className="App">
-					<div class="top-right">{!userAccessToken && <IntroScreen />}</div>
+					<div>{!userAccessToken && <IntroScreen />}</div>
 					<main>
 						{userAccessToken && (
 							<WebPlaybackReact {...webPlaybackSdkProps}>

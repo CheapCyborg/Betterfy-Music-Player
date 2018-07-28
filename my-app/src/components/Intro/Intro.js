@@ -15,11 +15,11 @@ export default class IntroScreen extends Component {
     return (
       <Fragment>
         <h3 class="some-text">Betterfy</h3>
-        <button className="btn btn-md btn-violet" onClick={this.buttonClick}>
+        <button class="btn btn-md btn-violet top-right" onClick={this.buttonClick}>
           Log in with Spotify
 				</button>
         <br />
-        <a target="_blank" href={this.links.announcement}>
+        <a target="_blank" class="top-right" href={this.links.announcement}>
           Spotify Web Playback SDK
 				</a>
         &nbsp;
