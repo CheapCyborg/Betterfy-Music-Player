@@ -8,7 +8,7 @@ import {Comment, User} from "./models/comment.js";
 const app = express();
 const router = express.Router();
 
-const API_PORT = process.env.PORT;
+const API_PORT = process.env.PORT || 8080;
 
 app.use(
     bodyParser.urlencoded({
@@ -22,7 +22,7 @@ app.use(logger("dev"));
 app.use("/api", router);
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
 
-mongoose.connect(
+mongoose.connect(process.env.MONGOLAB_URI || 
     getSecret("dbUri"),
     {
         useNewUrlParser: true
