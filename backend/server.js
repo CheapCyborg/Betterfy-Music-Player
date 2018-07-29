@@ -4,6 +4,7 @@ import logger from "morgan";
 import mongoose from "mongoose";
 import { getSecret } from "./secrets.js";
 import {Comment, User} from "./models/comment.js";
+import path from 'path'
 
 const app = express();
 const router = express.Router();
@@ -21,6 +22,14 @@ app.use(logger("dev"));
 // Use our router configuration when we call /api
 app.use("/api", router);
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static('../my-app/build'));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'my-app', 'build', "index.html"))
+    })
+}
 
 mongoose.connect(process.env.MONGOLAB_URI || 
     getSecret("dbUri"),
