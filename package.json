@@ -44,7 +44,7 @@
     "start:client": "cd my-app && yarn start",
     "start:server": "cd backend && nodemon server.js --exec babel-node --presets es2015,stage-0",
     "start": "concurrently \"yarn start:server\" \"yarn start:client\"",
-    "build": "./node_modules/.bin/webpack --config webpack.conf.js"
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
